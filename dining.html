@@ -1,0 +1,28 @@
+<div id="demo">
+  Hello
+</div>
+
+
+<script>
+  var url = "https://api.dineoncampus.com/v1/location/menu?site_id=5751fd2b90975b60e048929a&platform=0&location_id=5b9bd1c41178e90d4774210e&date=2018-10-11";
+  var html = "";
+  var request = new XMLHttpRequest();
+  request.open("GET", url, false);
+  request.send(null);
+  var menuJson = JSON.parse(request.responseText);
+  var jsondate = menuJson.menu.date;
+  html += jsondate + "<br>";
+  var periods = menuJson.menu.periods;
+  for (var i = 0; i < periods.length; i++) {
+    html += "<h2>" + periods[i].name + "</h2> <br>";
+    var categories = periods[i].categories;
+    for (var cat = 0; cat < categories.length; cat++) {
+      html += "<h3>" + categories[cat].name + "</h3><br>";
+      var items = categories[cat].items;
+      for (var it = 0; it < items.length; it++) {
+        html += items[it].name + "<br>";
+      }
+    }
+  }
+  document.getElementById("demo").innerHTML = html;
+</script>
